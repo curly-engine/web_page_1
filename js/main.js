@@ -8,8 +8,8 @@
    ---------------------- */
 const TARGET_DATE = "November 14, 2025 15:00:00"; // change here for exact unlock date/time
 const CANDLE_COUNT = 19;
-const MOBILE_THRESHOLD = 0.01;  // lower RMS threshold on phones (easier to trigger)
-const DESKTOP_THRESHOLD = 0.12; // desktop threshold
+const MOBILE_THRESHOLD = 0.06;  // lower RMS threshold on phones (easier to trigger)
+const DESKTOP_THRESHOLD = 0.07; // desktop threshold
 const SUSTAIN_FRAMES = 10;      // frames above threshold required to consider it a blow
 
 /* ----------------------
@@ -377,4 +377,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // begin countdown (uses TARGET_DATE)
   startCountdown();
 });
+
 
