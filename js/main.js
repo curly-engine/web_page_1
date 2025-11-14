@@ -38,7 +38,6 @@ let CANDLES = [];
 function buildCake() {
   cakeContainer.innerHTML = `
     <img src="assets/black_cake.png" class="cake-img">
-
     <div class="candles"></div>
   `;
 
@@ -119,7 +118,7 @@ function spawnConfetti() {
     origin: { y: 0.5 }
   });
 
-  // Side bursts for chaos
+  // Side bursts
   setTimeout(() => {
     confetti({
       particleCount: 70,
@@ -140,7 +139,7 @@ function spawnConfetti() {
     });
   }, 300);
 
-  // Floating long-tail confetti for beauty
+  // Long-floating confetti
   setTimeout(() => {
     confetti({
       particleCount: 50,
@@ -152,7 +151,6 @@ function spawnConfetti() {
   }, 600);
 }
 
-
 /* Experience Activate ---------------------------- */
 function activateExperience() {
   exp.classList.add('active');
@@ -163,6 +161,7 @@ function activateExperience() {
 function startMicDetection() {
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
+
       const ctx = new AudioContext();
       const src = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();
@@ -171,17 +170,26 @@ function startMicDetection() {
       const data = new Uint8Array(analyser.fftSize);
       src.connect(analyser);
 
+      let threshold = 0.07; // more sensitive
+      let blown = false;
+
       function listen() {
         analyser.getByteTimeDomainData(data);
-        let amp = 0;
 
+        let amp = 0;
         for (let i = 0; i < data.length; i++) {
           const v = (data[i] - 128) / 128;
           amp += v * v;
         }
         amp = Math.sqrt(amp / data.length);
 
-        if (amp > 0.18) {
+        // Detected blow
+        if (amp > threshold && !blown) {
+          blown = true;
+
+          blowBtn.textContent = "You blew the candles! 🎉";
+          blowBtn.disabled = true;
+
           extinguish();
           ctx.close();
           return;
@@ -189,22 +197,20 @@ function startMicDetection() {
 
         requestAnimationFrame(listen);
       }
+
       listen();
     })
     .catch(() => {
-        blowBtn.disabled = false;
-        blowBtn.textContent = "Tap again to blow";
+      // Mic denied → fallback to tap again
+      blowBtn.disabled = false;
+      blowBtn.textContent = "Tap again to blow";
 
-        // Remove mic listener completely
+      blowBtn.onclick = function manualExtinguish() {
         blowBtn.onclick = null;
-
-        // Next tap will extinguish the candles
-        blowBtn.addEventListener("click", function manualExtinguish() {
-            blowBtn.removeEventListener("click", manualExtinguish);
+        blowBtn.textContent = "You blew the candles! 🎉";
         extinguish();
+      };
     });
-});
-
 }
 
 /* Button ------------------------- */
@@ -216,4 +222,3 @@ blowBtn.onclick = () => {
 
 /* Start -------------------------- */
 document.addEventListener("DOMContentLoaded", startCountdown);
-
