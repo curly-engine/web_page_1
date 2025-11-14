@@ -170,7 +170,7 @@ function startMicDetection() {
       const data = new Uint8Array(analyser.fftSize);
       src.connect(analyser);
 
-      let threshold = 0.07; // more sensitive
+      let threshold = 0.07;          // more sensitive for mobiles
       let blown = false;
 
       function listen() {
@@ -183,25 +183,29 @@ function startMicDetection() {
         }
         amp = Math.sqrt(amp / data.length);
 
-        // Detected blow
+        // 🔥 FIX: update button FIRST, before stopping audio
         if (amp > threshold && !blown) {
           blown = true;
 
           blowBtn.textContent = "You blew the candles! 🎉";
           blowBtn.disabled = true;
 
+          // continue animations
           extinguish();
-          ctx.close();
+
+          // close mic safely AFTER UI update
+          setTimeout(() => ctx.close(), 50);
+
           return;
         }
 
-        requestAnimationFrame(listen);
+        if (!blown) requestAnimationFrame(listen);
       }
 
       listen();
     })
     .catch(() => {
-      // Mic denied → fallback to tap again
+      // Mic blocked → fallback
       blowBtn.disabled = false;
       blowBtn.textContent = "Tap again to blow";
 
@@ -213,6 +217,7 @@ function startMicDetection() {
     });
 }
 
+
 /* Button ------------------------- */
 blowBtn.onclick = () => {
   blowBtn.disabled = true;
@@ -222,3 +227,4 @@ blowBtn.onclick = () => {
 
 /* Start -------------------------- */
 document.addEventListener("DOMContentLoaded", startCountdown);
+
