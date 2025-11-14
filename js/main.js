@@ -15,32 +15,39 @@ const confettiLayer = $('#confetti-layer');
 
 /* Start Countdown -------------------------------- */
 function startCountdown() {
-  const target = new Date("November 14, 2025 14:38:00").getTime();
+  // TARGET DATE (test now)
+  const target = new Date("November 14, 2025 14:50:00").getTime();
 
   function update() {
     const now = Date.now();
     const diff = target - now;
 
+    // When countdown finishes
     if (diff <= 0) {
       timer.textContent = "0s";
       countdownEl.style.opacity = "0";
+
       setTimeout(() => countdownEl.remove(), 600);
       activateExperience();
       return;
     }
 
+    // Convert ms → time components
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hrs  = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
+    // Display formatted timer
     timer.textContent = `${days}d ${hrs}h ${mins}m ${secs}s`;
 
+    // Smooth updating
     requestAnimationFrame(update);
   }
 
   update();
 }
+
 
 
 /* Build Cake DOM -------------------------------- */
@@ -230,6 +237,7 @@ blowBtn.onclick = () => {
 
 /* Start -------------------------- */
 document.addEventListener("DOMContentLoaded", startCountdown);
+
 
 
 
