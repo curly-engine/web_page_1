@@ -6,7 +6,7 @@
 /* ----------------------
    CONFIG
    ---------------------- */
-const TARGET_DATE = "November 14, 2025 15:40:00"; // change here for exact unlock date/time
+const TARGET_DATE = "November 14, 2025 15:55:00"; // change here for exact unlock date/time
 const CANDLE_COUNT = 19;
 const MOBILE_THRESHOLD = 0.06;  // lower RMS threshold on phones (easier to trigger)
 const DESKTOP_THRESHOLD = 0.07; // desktop threshold
@@ -377,6 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // begin countdown (uses TARGET_DATE)
   startCountdown();
 });
+
 
 
 
