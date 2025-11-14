@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Birthday Surprise</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- If JS disabled -->
+  <noscript>
+    <div class="noscript-message">
+      <h1>Happy Birthday! 🎉</h1>
+      <p>Please enable JavaScript to see the surprise.</p>
+    </div>
+  </noscript>
+
+  <!-- Countdown -->
+  <div id="countdown" class="view countdown-view">
+    <div class="countdown-card glass">
+      <h1>Something unlocks in…</h1>
+      <p id="countdown-timer" class="countdown-number">3s</p>
+    </div>
+  </div>
+
+  <!-- Main Experience -->
+  <div id="experience" class="view experience-view" aria-hidden="true">
+
+    <!-- Confetti -->
+    <div id="confetti-layer"></div>
+
+    <div class="scene">
+      <div class="ambient-glow"></div>
+
+      <!-- Cake stack (center fixed always) -->
+      <div class="stack">
+        <div class="cake-wrapper">
+          <div id="cake-container" class="cake-container"></div>
+        </div>
+      </div>
+
+      <!-- Blow Button -->
+      <div class="controls">
+        <button id="blow-button" class="primary-button">Press to Blow</button>
+      </div>
+
+      <!-- Birthday Message -->
+      <div id="message-card" class="message-card glass">
+        <h2>✨ Happy Birthday ✨<br>Sarikaaaa!</h2>
+        <p>
+          I know I'm the last person you'd expect this from, and maybe I don't 
+          even deserve a second of your day, but I still wanted to wish you a 
+          very happy birthday.  
+          I made this hoping it might bring you even a tiny smile.  
+          If it doesn't, that's okay, I'm truly sorry.  
+          I just wanted to break the ice a little… maybe I'm silly for trying.  
+          If you're still upset, you don't have to reply.  
+          I just hope you're okay, and that this brought a small smile.  
+          Thank you, and I'm sorry.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

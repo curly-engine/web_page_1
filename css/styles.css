@@ -1,0 +1,266 @@
+/* ---------------------------------------------------
+   DARK THEME + GLASS UI + FIXED CENTER LAYOUT
+--------------------------------------------------- */
+:root {
+  --bg: linear-gradient(135deg, #0d0a18, #1a1330);
+  --text: #e7daff;
+  --accent: #7bcfff;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* THIS FIX */
+html {
+  background: var(--bg) !important;
+  height: 100%;
+}
+
+/* BODY */
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  background: var(--bg);       /* dark theme */
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+}
+
+
+
+/* View Wrapper */
+.view {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glass Element */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* Countdown */
+.countdown-card {
+  padding: 2rem;
+  text-align: center;
+}
+.countdown-number {
+  font-size: 3rem;
+  color: var(--accent);
+}
+
+/* Hide experience until ready */
+.experience-view {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.8s;
+}
+.experience-view.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Scene: fixes center ALWAYS */
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Glow behind cake */
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(255,200,255,0.06), transparent);
+  filter: blur(80px);
+}
+
+/* Cake container */
+.cake-container {
+  position: relative;
+  width: clamp(240px, 45vw, 380px);
+  height: clamp(240px, 45vw, 380px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 1s;
+}
+.cake-container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* PNG Cake image */
+.cake-img {
+  width: 120%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Candle ring positioning */
+.candles {
+  position: absolute;
+  bottom: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 60px;
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* Candles */
+.candle {
+  position: absolute;
+  width: 8px;
+  height: 28px;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  transition: 0.5s;
+}
+.candle.visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+.candle-body {
+  height: 100%;
+  background: linear-gradient(#7b020b, #520208);
+  border-radius: 8px 8px 4px 4px;
+}
+.wick {
+  width: 2px;
+  height: 10px;
+  background: #33121c;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* Flame */
+.flame {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  width: 12px;
+  height: 30px;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 40% 40%;
+  background: radial-gradient(circle at 50% 20%, #fffbbb, #ffb23f, #ff5a00);
+  box-shadow: 0 0 20px rgba(255,140,0,0.8);
+  animation: flicker 1s infinite alternate;
+}
+
+/* Smoke when extinguished */
+.candle.extinguished .flame { animation: fadeFlame 0.3s forwards; }
+.candle.extinguished .smoke { animation: smokeRise 1.2s forwards; opacity: 1; }
+
+.smoke {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, rgba(180,180,180,0.45), transparent);
+  border-radius: 50%;
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+/* Flame animations */
+@keyframes flicker {
+  from { transform: translateX(-50%) scale(1); }
+  to { transform: translateX(-50%) scale(0.9) skewX(6deg); }
+}
+@keyframes fadeFlame { to { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.4); } }
+@keyframes smokeRise {
+  from { opacity: 0; transform: translateX(-50%) translateY(0) scale(0.6); }
+  to { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(1.2); }
+}
+
+/* Button */
+.controls {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.primary-button {
+  background: linear-gradient(135deg,#5e69ff,#ff9ae0);
+  border: none;
+  border-radius: 999px;
+  padding: 1rem 2.4rem;
+  color: #2a0a33;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Message Card */
+.message-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(92vw, 520px);
+  padding: 1.6rem;
+  transform: translate(-50%, -40%);
+  opacity: 0;
+  transition: 0.8s;
+}
+.message-card.show {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.message-card h2 {
+  text-align: center;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+
+/* Confetti */
+#confetti-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.confetti-piece {
+  position: absolute;
+  top: -10%;
+  width: 10px;
+  height: 16px;
+  border-radius: 3px;
+  animation: fall 6s linear forwards;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 16px;
+  border-radius: 3px;
+  top: -10%;
+  will-change: transform, opacity;
+}
+
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
