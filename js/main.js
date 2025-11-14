@@ -161,7 +161,6 @@ function activateExperience() {
 function startMicDetection() {
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
-
       const ctx = new AudioContext();
       const src = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();
@@ -170,52 +169,44 @@ function startMicDetection() {
       const data = new Uint8Array(analyser.fftSize);
       src.connect(analyser);
 
-      let threshold = 0.07;          // more sensitive for mobiles
-      let blown = false;
-
       function listen() {
         analyser.getByteTimeDomainData(data);
-
         let amp = 0;
+
         for (let i = 0; i < data.length; i++) {
           const v = (data[i] - 128) / 128;
           amp += v * v;
         }
         amp = Math.sqrt(amp / data.length);
 
-        // 🔥 FIX: update button FIRST, before stopping audio
-        if (amp > threshold && !blown) {
-          blown = true;
-
+        if (amp > 0.07) {
+          // SUCCESS — MIC DETECTED BLOW
           blowBtn.textContent = "You blew the candles! 🎉";
           blowBtn.disabled = true;
 
-          // continue animations
           extinguish();
-
-          // close mic safely AFTER UI update
-          setTimeout(() => ctx.close(), 50);
-
+          ctx.close();
           return;
         }
 
-        if (!blown) requestAnimationFrame(listen);
+        requestAnimationFrame(listen);
       }
-
       listen();
     })
     .catch(() => {
-      // Mic blocked → fallback
       blowBtn.disabled = false;
       blowBtn.textContent = "Tap again to blow";
 
-      blowBtn.onclick = function manualExtinguish() {
-        blowBtn.onclick = null;
+      blowBtn.onclick = null;
+
+      blowBtn.addEventListener("click", function manualExtinguish() {
+        blowBtn.removeEventListener("click", manualExtinguish);
         blowBtn.textContent = "You blew the candles! 🎉";
         extinguish();
-      };
+      });
     });
 }
+
 
 
 /* Button ------------------------- */
@@ -227,4 +218,5 @@ blowBtn.onclick = () => {
 
 /* Start -------------------------- */
 document.addEventListener("DOMContentLoaded", startCountdown);
+
 
