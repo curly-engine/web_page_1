@@ -6,9 +6,9 @@
 /* ----------------------
    CONFIG
    ---------------------- */
-const TARGET_DATE = "December 1, 2025 00:00:00"; // change here for exact unlock date/time
+const TARGET_DATE = "November 14, 2025 15:00:00"; // change here for exact unlock date/time
 const CANDLE_COUNT = 19;
-const MOBILE_THRESHOLD = 0.06;  // lower RMS threshold on phones (easier to trigger)
+const MOBILE_THRESHOLD = 0.01;  // lower RMS threshold on phones (easier to trigger)
 const DESKTOP_THRESHOLD = 0.12; // desktop threshold
 const SUSTAIN_FRAMES = 10;      // frames above threshold required to consider it a blow
 
@@ -112,8 +112,8 @@ function positionCandles() {
   const H = Math.max(1, group.offsetHeight);
   const cx = W / 2;
   const cy = H / 2;
-  const rx = W * 0.40; // horizontal radius
-  const ry = H * 0.22; // vertical radius (flattened)
+  const rx = W * 0.3; // horizontal radius
+  const ry = H * 0.2; // vertical radius (flattened)
 
   CANDLES.forEach((c, i) => {
     // evenly around full circle
@@ -377,3 +377,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // begin countdown (uses TARGET_DATE)
   startCountdown();
 });
+
