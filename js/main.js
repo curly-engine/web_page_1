@@ -179,7 +179,7 @@ function startMicDetection() {
         }
         amp = Math.sqrt(amp / data.length);
 
-        if (amp > 0.07) {
+        if (amp > 0.01) {
           // SUCCESS — MIC DETECTED BLOW
           blowBtn.textContent = "You blew the candles! 🎉";
           blowBtn.disabled = true;
@@ -218,5 +218,6 @@ blowBtn.onclick = () => {
 
 /* Start -------------------------- */
 document.addEventListener("DOMContentLoaded", startCountdown);
+
 
 
