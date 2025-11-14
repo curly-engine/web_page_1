@@ -10,40 +10,26 @@
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* 🚫 Disable scroll-down to refresh (Android + iPhone) */
-html, body {
-  overscroll-behavior-y: none !important;
-  overscroll-behavior: none !important;
-  touch-action: pan-x pan-y !important;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* iPhone Safari extra fix */
-body {
-  position: fixed;
-  width: 100%;
-  overflow: hidden !important;
-}
-
-
 /* THIS FIX */
 html {
   background: var(--bg) !important;
-  height: 100%;
 }
+
 
 /* BODY */
 body {
   margin: 0;
   font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
-  background: var(--bg);       /* dark theme */
+  background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow: hidden;
+
+  /* FIX pull-to-refresh */
+  overflow-y: auto;
+  overscroll-behavior: auto;
 }
+
 
 
 
@@ -282,4 +268,5 @@ body {
     opacity: 0;
   }
 }
+
 
