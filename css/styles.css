@@ -83,7 +83,7 @@ body{
 
 /* candle visuals */
 .candle{position:absolute;width:8px;height:30px;transform:translate(-50%,20px);opacity:0;transition:transform .45s var(--timing-fast),opacity .35s ease;z-index:40}
-.candle.visible{transform:translate(-50%,0%);opacity:1}
+.candle.visible{transform:translate(-50%,100%);opacity:1}
 .candle-body{position:absolute;width:100%;height:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#7b020b,#500107)}
 .candle-body::before{content:"";position:absolute;top:0;left:0;width:8px;height:4px;border-radius:50%;background:linear-gradient(180deg,#a80411,#620209)}
 .wick{position:absolute;top:-10px;left:50%;width:2px;height:10px;transform:translateX(-50%);background:#2b1420;border-radius:999px}
@@ -120,4 +120,5 @@ body{
 
 /* noscript */
 .noscript-message{position:fixed;inset:0;display:grid;place-items:center;padding:32px;background:rgba(0,0,0,0.45);text-align:center}
+
 
